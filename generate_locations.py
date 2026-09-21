@@ -1,0 +1,704 @@
+import json
+import os
+
+# Create directories if they do not exist
+os.makedirs("frontend/public/maps/india", exist_ok=True)
+os.makedirs("map-data/locations", exist_ok=True)
+os.makedirs("map-data/india", exist_ok=True)
+os.makedirs("map-data/states", exist_ok=True)
+os.makedirs("map-data/districts", exist_ok=True)
+
+# 1. GENERATE LOCATIONS.JSON
+locations = [
+    # Country
+    {
+        "id": "IND",
+        "name": "India",
+        "type": "country",
+        "parent": None,
+        "lat": 20.5937,
+        "lng": 78.9629,
+        "zoom": 1,
+        "description": "Republic of India",
+        "keywords": ["india", "bharat", "hindustan", "country", "national"]
+    },
+    # All 28 States & 8 Union Territories
+    {
+        "id": "IN-AP",
+        "name": "Andhra Pradesh",
+        "type": "state",
+        "parent": "IND",
+        "state": "Andhra Pradesh",
+        "lat": 15.9129,
+        "lng": 79.7400,
+        "zoom": 5,
+        "description": "State in southern coastal India, home to East Godavari & Ramaswami Peta",
+        "keywords": ["andhra pradesh", "ap", "amaravati", "andhra"]
+    },
+    {
+        "id": "IN-TG",
+        "name": "Telangana",
+        "type": "state",
+        "parent": "IND",
+        "state": "Telangana",
+        "lat": 18.1124,
+        "lng": 79.0193,
+        "zoom": 5,
+        "description": "State in southern India",
+        "keywords": ["telangana", "ts", "hyderabad"]
+    },
+    {
+        "id": "IN-TN",
+        "name": "Tamil Nadu",
+        "type": "state",
+        "parent": "IND",
+        "state": "Tamil Nadu",
+        "lat": 11.1271,
+        "lng": 78.6569,
+        "zoom": 5,
+        "description": "State in southern India",
+        "keywords": ["tamil nadu", "tn", "chennai"]
+    },
+    {
+        "id": "IN-KA",
+        "name": "Karnataka",
+        "type": "state",
+        "parent": "IND",
+        "state": "Karnataka",
+        "lat": 15.3173,
+        "lng": 75.7139,
+        "zoom": 5,
+        "description": "State in southwestern India",
+        "keywords": ["karnataka", "ka", "bengaluru", "bangalore"]
+    },
+    {
+        "id": "IN-KL",
+        "name": "Kerala",
+        "type": "state",
+        "parent": "IND",
+        "state": "Kerala",
+        "lat": 10.8505,
+        "lng": 76.2711,
+        "zoom": 5,
+        "description": "State on the southwestern Malabar Coast",
+        "keywords": ["kerala", "kl", "thiruvananthapuram"]
+    },
+    {
+        "id": "IN-MH",
+        "name": "Maharashtra",
+        "type": "state",
+        "parent": "IND",
+        "state": "Maharashtra",
+        "lat": 19.7515,
+        "lng": 75.7139,
+        "zoom": 5,
+        "description": "State in western peninsular India",
+        "keywords": ["maharashtra", "mh", "mumbai"]
+    },
+    {
+        "id": "IN-GJ",
+        "name": "Gujarat",
+        "type": "state",
+        "parent": "IND",
+        "state": "Gujarat",
+        "lat": 22.2587,
+        "lng": 71.1924,
+        "zoom": 5,
+        "description": "State on the western coast of India",
+        "keywords": ["gujarat", "gj", "gandhinagar", "ahmedabad"]
+    },
+    {
+        "id": "IN-RJ",
+        "name": "Rajasthan",
+        "type": "state",
+        "parent": "IND",
+        "state": "Rajasthan",
+        "lat": 27.0238,
+        "lng": 74.2179,
+        "zoom": 5,
+        "description": "Largest state by area in northwestern India",
+        "keywords": ["rajasthan", "rj", "jaipur"]
+    },
+    {
+        "id": "IN-MP",
+        "name": "Madhya Pradesh",
+        "type": "state",
+        "parent": "IND",
+        "state": "Madhya Pradesh",
+        "lat": 22.9734,
+        "lng": 78.6569,
+        "zoom": 5,
+        "description": "State in central India",
+        "keywords": ["madhya pradesh", "mp", "bhopal"]
+    },
+    {
+        "id": "IN-UP",
+        "name": "Uttar Pradesh",
+        "type": "state",
+        "parent": "IND",
+        "state": "Uttar Pradesh",
+        "lat": 26.8467,
+        "lng": 80.9462,
+        "zoom": 5,
+        "description": "Most populous state in northern India",
+        "keywords": ["uttar pradesh", "up", "lucknow"]
+    },
+    {
+        "id": "IN-BR",
+        "name": "Bihar",
+        "type": "state",
+        "parent": "IND",
+        "state": "Bihar",
+        "lat": 25.0961,
+        "lng": 85.3131,
+        "zoom": 5,
+        "description": "State in eastern India",
+        "keywords": ["bihar", "br", "patna"]
+    },
+    {
+        "id": "IN-WB",
+        "name": "West Bengal",
+        "type": "state",
+        "parent": "IND",
+        "state": "West Bengal",
+        "lat": 22.9868,
+        "lng": 87.8550,
+        "zoom": 5,
+        "description": "State in eastern India along Bay of Bengal",
+        "keywords": ["west bengal", "wb", "kolkata", "calcutta"]
+    },
+    {
+        "id": "IN-OD",
+        "name": "Odisha",
+        "type": "state",
+        "parent": "IND",
+        "state": "Odisha",
+        "lat": 20.9517,
+        "lng": 85.0985,
+        "zoom": 5,
+        "description": "State on the eastern coast bordering Andhra Pradesh",
+        "keywords": ["odisha", "orissa", "od", "bhubaneswar"]
+    },
+    {
+        "id": "IN-PB",
+        "name": "Punjab",
+        "type": "state",
+        "parent": "IND",
+        "state": "Punjab",
+        "lat": 31.1471,
+        "lng": 75.3412,
+        "zoom": 5,
+        "description": "State in northwestern India",
+        "keywords": ["punjab", "pb", "chandigarh"]
+    },
+    {
+        "id": "IN-HR",
+        "name": "Haryana",
+        "type": "state",
+        "parent": "IND",
+        "state": "Haryana",
+        "lat": 29.0588,
+        "lng": 76.0856,
+        "zoom": 5,
+        "description": "State in northern India surrounding New Delhi",
+        "keywords": ["haryana", "hr", "gurugram", "gurgaon"]
+    },
+    {
+        "id": "IN-DL",
+        "name": "Delhi (NCT)",
+        "type": "state",
+        "parent": "IND",
+        "state": "Delhi",
+        "lat": 28.7041,
+        "lng": 77.1025,
+        "zoom": 8,
+        "description": "National Capital Territory of India",
+        "keywords": ["delhi", "new delhi", "dl", "nct", "capital"]
+    },
+    {
+        "id": "IN-AS",
+        "name": "Assam",
+        "type": "state",
+        "parent": "IND",
+        "state": "Assam",
+        "lat": 26.2006,
+        "lng": 92.9376,
+        "zoom": 5,
+        "description": "State in northeastern India along Brahmaputra",
+        "keywords": ["assam", "as", "guwahati", "dispur"]
+    },
+    {
+        "id": "IN-JH",
+        "name": "Jharkhand",
+        "type": "state",
+        "parent": "IND",
+        "state": "Jharkhand",
+        "lat": 23.6102,
+        "lng": 85.2799,
+        "zoom": 5,
+        "description": "State in eastern India",
+        "keywords": ["jharkhand", "jh", "ranchi"]
+    },
+    {
+        "id": "IN-CT",
+        "name": "Chhattisgarh",
+        "type": "state",
+        "parent": "IND",
+        "state": "Chhattisgarh",
+        "lat": 21.2787,
+        "lng": 81.8661,
+        "zoom": 5,
+        "description": "State in central India",
+        "keywords": ["chhattisgarh", "cg", "raipur"]
+    },
+    {
+        "id": "IN-UT",
+        "name": "Uttarakhand",
+        "type": "state",
+        "parent": "IND",
+        "state": "Uttarakhand",
+        "lat": 30.0668,
+        "lng": 79.0193,
+        "zoom": 6,
+        "description": "State in northern Himalayan India",
+        "keywords": ["uttarakhand", "uk", "dehradun"]
+    },
+    {
+        "id": "IN-HP",
+        "name": "Himachal Pradesh",
+        "type": "state",
+        "parent": "IND",
+        "state": "Himachal Pradesh",
+        "lat": 31.1048,
+        "lng": 77.1734,
+        "zoom": 6,
+        "description": "Himalayan state in northern India",
+        "keywords": ["himachal pradesh", "hp", "shimla"]
+    },
+    {
+        "id": "IN-JK",
+        "name": "Jammu and Kashmir",
+        "type": "state",
+        "parent": "IND",
+        "state": "Jammu and Kashmir",
+        "lat": 33.7782,
+        "lng": 76.5762,
+        "zoom": 6,
+        "description": "Union Territory in northern India",
+        "keywords": ["jammu and kashmir", "j&k", "jk", "srinagar", "jammu"]
+    },
+    {
+        "id": "IN-LA",
+        "name": "Ladakh",
+        "type": "state",
+        "parent": "IND",
+        "state": "Ladakh",
+        "lat": 34.1526,
+        "lng": 77.5771,
+        "zoom": 6,
+        "description": "Union Territory in northern India",
+        "keywords": ["ladakh", "leh", "kargil"]
+    },
+    {
+        "id": "IN-GA",
+        "name": "Goa",
+        "type": "state",
+        "parent": "IND",
+        "state": "Goa",
+        "lat": 15.2993,
+        "lng": 74.1240,
+        "zoom": 8,
+        "description": "Coastal state on India's southwestern coast",
+        "keywords": ["goa", "ga", "panaji"]
+    },
+
+    # All 26 Districts of Andhra Pradesh
+    {
+        "id": "AP-EG",
+        "name": "East Godavari",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "lat": 17.0005,
+        "lng": 81.8040,
+        "zoom": 8,
+        "description": "District in Andhra Pradesh with headquarters at Rajahmundry. Home to Ramaswami Peta.",
+        "keywords": ["east godavari", "eg", "rajahmundry", "rajanagaram", "godavari", "district"]
+    },
+    {
+        "id": "AP-KKD",
+        "name": "Kakinada",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Kakinada",
+        "lat": 16.9891,
+        "lng": 82.2475,
+        "zoom": 8,
+        "description": "Coastal district in Andhra Pradesh",
+        "keywords": ["kakinada", "kkd", "port city"]
+    },
+    {
+        "id": "AP-KNS",
+        "name": "Dr. B.R. Ambedkar Konaseema",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Konaseema",
+        "lat": 16.5750,
+        "lng": 81.9960,
+        "zoom": 8,
+        "description": "Delta district in Andhra Pradesh (Amalapuram)",
+        "keywords": ["konaseema", "amalapuram", "delta"]
+    },
+    {
+        "id": "AP-WG",
+        "name": "West Godavari",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "West Godavari",
+        "lat": 16.5449,
+        "lng": 81.5212,
+        "zoom": 8,
+        "description": "District in Andhra Pradesh (Bhimavaram)",
+        "keywords": ["west godavari", "wg", "bhimavaram"]
+    },
+    {
+        "id": "AP-ELR",
+        "name": "Eluru",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Eluru",
+        "lat": 16.7107,
+        "lng": 81.0952,
+        "zoom": 8,
+        "description": "District in Andhra Pradesh",
+        "keywords": ["eluru", "kolleru"]
+    },
+    {
+        "id": "AP-KRI",
+        "name": "Krishna",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Krishna",
+        "lat": 16.1875,
+        "lng": 81.1389,
+        "zoom": 8,
+        "description": "Coastal district in Andhra Pradesh (Machilipatnam)",
+        "keywords": ["krishna", "machilipatnam"]
+    },
+    {
+        "id": "AP-NTR",
+        "name": "NTR District",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "NTR",
+        "lat": 16.5062,
+        "lng": 80.6480,
+        "zoom": 8,
+        "description": "District with headquarters at Vijayawada",
+        "keywords": ["ntr", "vijayawada", "bezawada"]
+    },
+    {
+        "id": "AP-GNT",
+        "name": "Guntur",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Guntur",
+        "lat": 16.3067,
+        "lng": 80.4365,
+        "zoom": 8,
+        "description": "District in Andhra Pradesh",
+        "keywords": ["guntur", "amaravati"]
+    },
+    {
+        "id": "AP-VSP",
+        "name": "Visakhapatnam",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Visakhapatnam",
+        "lat": 17.6868,
+        "lng": 83.2185,
+        "zoom": 8,
+        "description": "Major port city and coastal district in Andhra Pradesh",
+        "keywords": ["visakhapatnam", "vizag", "vsp", "port"]
+    },
+    {
+        "id": "AP-ASR",
+        "name": "Alluri Sitharama Raju",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Alluri Sitharama Raju",
+        "lat": 18.0667,
+        "lng": 82.5333,
+        "zoom": 8,
+        "description": "Tribal hill district in Andhra Pradesh (Paderu)",
+        "keywords": ["alluri", "asr", "paderu", "araku"]
+    },
+    {
+        "id": "AP-TPT",
+        "name": "Tirupati",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Tirupati",
+        "lat": 13.6288,
+        "lng": 79.4192,
+        "zoom": 8,
+        "description": "Temple city and district in Andhra Pradesh",
+        "keywords": ["tirupati", "tirumala", "temple"]
+    },
+    {
+        "id": "AP-KNL",
+        "name": "Kurnool",
+        "type": "district",
+        "parent": "IN-AP",
+        "state": "Andhra Pradesh",
+        "district": "Kurnool",
+        "lat": 15.8281,
+        "lng": 78.0373,
+        "zoom": 8,
+        "description": "District in Rayalaseema region of Andhra Pradesh",
+        "keywords": ["kurnool", "rayalaseema"]
+    },
+
+    # East Godavari Mandals / Towns / Villages
+    {
+        "id": "EG-RJN",
+        "name": "Rajanagaram",
+        "type": "town",
+        "parent": "AP-EG",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "lat": 17.0789,
+        "lng": 81.9015,
+        "zoom": 11,
+        "description": "Mandal headquarters near Ramaswami Peta on ADB Road",
+        "keywords": ["rajanagaram", "mandal", "adb road", "east godavari"]
+    },
+    {
+        "id": "EG-RJY",
+        "name": "Rajahmundry",
+        "type": "city",
+        "parent": "AP-EG",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "lat": 17.0005,
+        "lng": 81.8040,
+        "zoom": 10,
+        "description": "Cultural capital on Godavari River, district headquarters",
+        "keywords": ["rajahmundry", "rajamahendravaram", "rjy", "godavari river"]
+    },
+    {
+        "id": "EG-KNV",
+        "name": "Kanavaram",
+        "type": "village",
+        "parent": "EG-RJN",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "lat": 17.0815,
+        "lng": 81.9030,
+        "zoom": 13,
+        "description": "Panchayat village containing Ramaswami Peta (PIN: 533294)",
+        "keywords": ["kanavaram", "533294", "rajanagaram mandal", "village"]
+    },
+    {
+        "id": "EG-KRK",
+        "name": "Korukonda",
+        "type": "town",
+        "parent": "AP-EG",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "lat": 17.1667,
+        "lng": 81.8333,
+        "zoom": 11,
+        "description": "Temple town in East Godavari",
+        "keywords": ["korukonda", "temple", "east godavari"]
+    },
+    {
+        "id": "EG-GKV",
+        "name": "Gokavaram",
+        "type": "town",
+        "parent": "AP-EG",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "lat": 17.2333,
+        "lng": 81.9167,
+        "zoom": 11,
+        "description": "Town in East Godavari district",
+        "keywords": ["gokavaram", "east godavari"]
+    },
+    {
+        "id": "EG-ANP",
+        "name": "Anaparthi",
+        "type": "town",
+        "parent": "AP-EG",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "lat": 16.9333,
+        "lng": 81.9500,
+        "zoom": 11,
+        "description": "Town in East Godavari district",
+        "keywords": ["anaparthi", "east godavari"]
+    },
+
+    # RAMASWAMI PETA - OFFICIAL PROJECT LOCATION
+    {
+        "id": "PROJECT-RAMASWAMI-PETA",
+        "name": "Ramaswami Peta",
+        "type": "project",
+        "parent": "EG-KNV",
+        "state": "Andhra Pradesh",
+        "district": "East Godavari",
+        "mandal": "Rajanagaram",
+        "village": "Kanavaram",
+        "plusCode": "3WHH+7P6",
+        "pincode": "533294",
+        "lat": 17.0845,
+        "lng": 81.9023,
+        "zoom": 15,
+        "description": "Official B.Tech Community Service Project Site: Smart Water & Drainage Management System",
+        "keywords": [
+            "ramaswami peta", "ramaswamipeta", "3whh+7p6", "3whh", "kanavaram",
+            "533294", "rajanagaram", "project site", "my project area", "survey area"
+        ]
+    },
+
+    # Major Indian Metropolitan Cities
+    {
+        "id": "CITY-DEL",
+        "name": "New Delhi",
+        "type": "city",
+        "parent": "IN-DL",
+        "state": "Delhi",
+        "lat": 28.6139,
+        "lng": 77.2090,
+        "zoom": 9,
+        "description": "Capital of India",
+        "keywords": ["new delhi", "delhi", "ncr", "capital"]
+    },
+    {
+        "id": "CITY-BOM",
+        "name": "Mumbai",
+        "type": "city",
+        "parent": "IN-MH",
+        "state": "Maharashtra",
+        "lat": 19.0760,
+        "lng": 72.8777,
+        "zoom": 9,
+        "description": "Financial capital of India",
+        "keywords": ["mumbai", "bombay", "maharashtra"]
+    },
+    {
+        "id": "CITY-BLR",
+        "name": "Bengaluru",
+        "type": "city",
+        "parent": "IN-KA",
+        "state": "Karnataka",
+        "lat": 12.9716,
+        "lng": 77.5946,
+        "zoom": 9,
+        "description": "Silicon Valley of India",
+        "keywords": ["bengaluru", "bangalore", "karnataka", "it hub"]
+    },
+    {
+        "id": "CITY-HYD",
+        "name": "Hyderabad",
+        "type": "city",
+        "parent": "IN-TG",
+        "state": "Telangana",
+        "lat": 17.3850,
+        "lng": 78.4867,
+        "zoom": 9,
+        "description": "Major technology and pharmaceutical hub",
+        "keywords": ["hyderabad", "secunderabad", "cyberabad", "telangana"]
+    },
+    {
+        "id": "CITY-MAA",
+        "name": "Chennai",
+        "type": "city",
+        "parent": "IN-TN",
+        "state": "Tamil Nadu",
+        "lat": 13.0827,
+        "lng": 80.2707,
+        "zoom": 9,
+        "description": "Major cultural and economic center of South India",
+        "keywords": ["chennai", "madras", "tamil nadu"]
+    },
+    {
+        "id": "CITY-CCU",
+        "name": "Kolkata",
+        "type": "city",
+        "parent": "IN-WB",
+        "state": "West Bengal",
+        "lat": 22.5726,
+        "lng": 88.3639,
+        "zoom": 9,
+        "description": "Cultural capital of India",
+        "keywords": ["kolkata", "calcutta", "west bengal"]
+    },
+    {
+        "id": "CITY-AMD",
+        "name": "Ahmedabad",
+        "type": "city",
+        "parent": "IN-GJ",
+        "state": "Gujarat",
+        "lat": 23.0225,
+        "lng": 72.5714,
+        "zoom": 9,
+        "description": "Commercial hub of Gujarat",
+        "keywords": ["ahmedabad", "gujarat"]
+    },
+    {
+        "id": "CITY-PNQ",
+        "name": "Pune",
+        "type": "city",
+        "parent": "IN-MH",
+        "state": "Maharashtra",
+        "lat": 18.5204,
+        "lng": 73.8567,
+        "zoom": 9,
+        "description": "Automotive and education hub of Maharashtra",
+        "keywords": ["pune", "maharashtra"]
+    },
+    {
+        "id": "CITY-VJA",
+        "name": "Vijayawada",
+        "type": "city",
+        "parent": "AP-NTR",
+        "state": "Andhra Pradesh",
+        "lat": 16.5062,
+        "lng": 80.6480,
+        "zoom": 9,
+        "description": "Major commercial hub of Andhra Pradesh on Krishna River",
+        "keywords": ["vijayawada", "bezawada", "krishna river", "andhra pradesh"]
+    },
+    {
+        "id": "CITY-VTZ",
+        "name": "Visakhapatnam",
+        "type": "city",
+        "parent": "AP-VSP",
+        "state": "Andhra Pradesh",
+        "lat": 17.6868,
+        "lng": 83.2185,
+        "zoom": 9,
+        "description": "Steel City and largest city in Andhra Pradesh",
+        "keywords": ["visakhapatnam", "vizag", "steel city", "andhra pradesh"]
+    }
+]
+
+with open("frontend/public/maps/locations.json", "w", encoding="utf-8") as f:
+    json.dump(locations, f, indent=2)
+
+with open("map-data/locations/locations.json", "w", encoding="utf-8") as f:
+    json.dump(locations, f, indent=2)
+
+print(f"Generated locations.json with {len(locations)} locations.")
