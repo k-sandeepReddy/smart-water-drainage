@@ -74,26 +74,7 @@ This software runs **100% offline** on a local computer with **zero external dep
 
 ---
 
-## 4. Empirical Community Survey Data (208 Households)
-
-The survey analytics module is pre-seeded with the **208 real survey responses** collected during the CSP field investigation in Ramaswami Peta:
-
-| Question | Options & Distribution |
-| :--- | :--- |
-| **Q1: Regular Water Supply** | **Yes:** 122 (58.7%) \| **No:** 65 (31.3%) \| **Sometimes:** 21 (10.1%) |
-| **Q2: Summer Water Shortage** | **Yes:** 129 (62.0%) \| **No:** 60 (28.8%) \| **Sometimes:** 19 (9.1%) |
-| **Q3: Main Drinking Water Source** | **Municipal Tap:** 79 (38.0%) \| **Borewell:** 66 (31.7%) \| **Water Tanker:** 43 (20.7%) \| **Others:** 20 (9.6%) |
-| **Q6: Drainage Maintenance** | **No:** 97 (46.6%) \| **Yes:** 69 (33.2%) \| **Partially:** 42 (20.2%) |
-| **Q7: Stagnant Water Near Homes** | **Yes:** 116 (55.8%) \| **No:** 92 (44.2%) |
-| **Q8: Regular Drain Cleaning** | **No:** 87 (41.8%) \| **Yes:** 71 (34.1%) \| **Sometimes:** 50 (24.0%) |
-| **Q9: Mosquito Problems** | **No:** 77 (37.0%) \| **Yes:** 70 (33.7%) \| **Sometimes:** 61 (29.3%) |
-| **Q10: Flooding During Heavy Rain** | **Yes:** 92 (44.2%) \| **No:** 68 (32.7%) \| **Sometimes:** 48 (23.1%) |
-| **Q11: Garbage Collection** | **Yes:** 104 (50.0%) \| **No:** 67 (32.2%) \| **Sometimes:** 37 (17.8%) |
-| **Q12: Community Suggestions** | **Improve Pipe Network:** 65 (31.3%)<br>**Regular Maintenance & Repair:** 52 (25.0%)<br>**Increase Water Storage:** 39 (18.8%)<br>**Better Drainage & Waste Management:** 33 (15.9%)<br>**Other:** 19 (9.1%) |
-
----
-
-## 5. Step-by-Step Demonstration Workflow
+## 4. Step-by-Step Demonstration Workflow
 
 Follow this 18-step workflow to verify all system components:
 
@@ -123,7 +104,7 @@ Follow this 18-step workflow to verify all system components:
 
 ---
 
-## 6. How to Run Locally
+## 5. How to Run Locally
 
 ### Option A: Using the Windows Batch Script
 Double-click `start_offline.bat`. It will automatically:
@@ -147,7 +128,7 @@ npm run dev
 
 ---
 
-## 7. Troubleshooting
+## 6. Troubleshooting
 
 - **Backend not running message in frontend:**
   Ensure the FastAPI server is running on port 8000. Test with `http://127.0.0.1:8000/health`.
@@ -158,11 +139,11 @@ npm run dev
 
 ---
 
-## 8. Offline Map Data Setup
+## 7. Offline Map Data Setup
 
 The **Smart Water & Drainage Management System** features a **100% Offline GIS & Satellite Mapping Engine** that operates with zero internet connectivity and zero external map tile servers (no Google Maps API, no OpenStreetMap CDN, no Mapbox).
 
-### 8.1 Folder Structure & File Locations
+### 7.1 Folder Structure & File Locations
 
 All offline map assets are stored locally within the project repository:
 
@@ -189,7 +170,7 @@ smart-water-drainage/
         └── locations.json
 ```
 
-### 8.2 Supported File Formats
+### 7.2 Supported File Formats
 
 1. **GeoJSON (`.json` / `.geojson`):**
    - The primary vector format used by the application for state boundaries, district polygons, river paths, national highways, and locality boundaries.
@@ -200,7 +181,7 @@ smart-water-drainage/
 3. **MBTiles / PMTiles (Optional Extension):**
    - For ultra-dense raster/vector tile packages (e.g. statewide zoom 0–18), MBTiles/PMTiles can be converted into GeoJSON layers or extracted into `frontend/public/maps/tiles/{z}/{x}/{y}.pbf` for local serving.
 
-### 8.3 How to Add New Districts, Mandals, or Villages
+### 7.3 How to Add New Districts, Mandals, or Villages
 
 To add a new locality (e.g., another mandal or village in Andhra Pradesh):
 
@@ -239,7 +220,7 @@ To add a new locality (e.g., another mandal or village in Andhra Pradesh):
    }
    ```
 
-### 8.4 How the System Detects Installed Map Data
+### 7.4 How the System Detects Installed Map Data
 
 1. **Automated Offline Initialization:**
    Upon loading the **Community Map** page, the application automatically performs local HTTP GET requests to `/maps/locations.json` and `/maps/india-geo.json`.
@@ -248,7 +229,7 @@ To add a new locality (e.g., another mandal or village in Andhra Pradesh):
 3. **Zero Configuration Required:**
    All default files for India, Andhra Pradesh, East Godavari, Rajanagaram, Kanavaram, and Ramaswami Peta are pre-installed and ready out-of-the-box.
 
-### 8.5 Running Completely Offline
+### 7.5 Running Completely Offline
 
 1. Ensure Python (3.9+) and Node.js (18+) are installed on your machine.
 2. Disconnect your computer from Wi-Fi / Ethernet to verify offline capabilities.
